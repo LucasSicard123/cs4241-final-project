@@ -10,6 +10,8 @@ function App() {
   const [score, setScore] = useState(0);
   //timer
   const [seconds, setSeconds] = useState(10);
+  //scoreboard
+  const [scoreboard, setScoreboard] = useState([{name: "BigScore", score: 100}, {name: "MidScore", score: 10}, {name: "LowScore", score: 1}]);
   useEffect(() =>{
       const timer = setInterval(() => {
           setSeconds(prevSeconds => prevSeconds - 1)
@@ -20,6 +22,18 @@ function App() {
       return () => clearInterval(timer);
   }, [seconds]);
 
+  // update the scoreboard with a new score
+  // if the new score is not within top 5 scores, scoreboard will not change
+  // may want to change to use current score and user rather than params
+    const addScore = (newName:string, newScore:number) =>{
+        for (var i=0; i<scoreboard.length; i++) {
+            if (newScore > scoreboard[i].score) {
+                let newScoreboard = scoreboard.slice(0, i).concat([{name: newName, score: newScore}]).concat(scoreboard.slice(i, 4))
+                setScoreboard(newScoreboard)
+                break
+            }
+        }
+    }
 
   //word count increment
     const wordCountIncrement = () =>{
@@ -39,6 +53,9 @@ function App() {
       }
   }
 
+  // map the scoreboard data to list items
+  const arrayDataItems = scoreboard.map((s) => <li>{s.name}: {s.score}</li>);
+
   return (
     <>
         <div>
@@ -55,6 +72,10 @@ function App() {
                 <div className="column">
                     <h1>Score Counter</h1>
                     <p>Score: {score}</p>
+                </div>
+                <div className="column">
+                    <h1>Scoreboard</h1>
+                    <ul>{arrayDataItems}</ul>
                 </div>
 
             </div>
