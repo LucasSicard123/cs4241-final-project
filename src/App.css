@@ -118,4 +118,8 @@ input{
   margin: 5px 10px;
 }
 
+.alert{
+  background-color: red;
+  text-align: center;
+}
 

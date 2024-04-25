@@ -2,6 +2,8 @@ import {useEffect, useState} from 'react'
 import './App.css'
 
 function App() {
+    //alerts
+    const [alert, setAlert] = useState('test');
     //display last word
     const [lastWord, setLastWord] = useState('');
     //whether timer running
@@ -187,6 +189,7 @@ function App() {
                         onKeyUpCapture={handleNameSubmit}
                         placeholder="Press Enter to Submit Your Name"
                     />
+                    <div className="alert">{alert}</div>
                 </p>
             )}
             {!showInput && gameEnd && nameSubmit &&(
@@ -210,13 +213,17 @@ function App() {
             {showInput && lastWord && !gameEnd &&
                 <b><p>{lastWord}</p></b>}
             <div className="InputWord">
-                {showInput && !gameEnd &&( <input
+                {showInput && !gameEnd &&(
+                    <>
+                    <input
                     type="text"
                     value={inputValue}
                     onChange={handleInput}
                     onKeyUpCapture={handleSubmit}
                     placeholder="Press Enter to Submit"
                 />
+                    <div className="alert">{alert}</div>
+                        </>
                 )}
             <div className="array-container">
                 {showInput && !gameEnd && (
